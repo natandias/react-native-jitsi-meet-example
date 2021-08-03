@@ -23,6 +23,7 @@ function App() {
   function onConferenceTerminated(nativeEvent) {
     /* Conference terminated event */
     setIsMeetOpened(false);
+    JitsiMeet.endCall();
     console.log('onConferenceTerminated');
   }
 
