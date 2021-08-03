@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {Text, Button} from 'react-native';
+import React, {useState} from 'react';
+import {Text, Button, TextInput, StyleSheet} from 'react-native';
 import JitsiMeet, {JitsiMeetView} from 'react-native-jitsi-meet';
 
 function App() {
@@ -8,10 +8,13 @@ function App() {
 
   const [isMeetOpened, setIsMeetOpened] = useState(false);
 
-  const callUrl = 'https://meet.jit.si/vamostestarojitsi';
+  const [callUrl, setCallUrl] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+
   const userInfo = {
-    displayName: 'React-Native',
-    email: 'user@example.com',
+    displayName: username,
+    email: email,
     avatar: 'https://static.anime21.blog.br/2019/05/02-3.jpg',
   };
 
@@ -40,12 +43,35 @@ function App() {
     <>
       {!isMeetOpened ? (
         <>
-          <Text>Teste</Text>
+          <Text>Teste do Jitsi Meet</Text>
+
+          <TextInput
+            style={styles.input}
+            onChangeText={setCallUrl}
+            value={callUrl}
+            placeholder="Link da chamada"
+          />
+
+          <TextInput
+            style={styles.input}
+            onChangeText={setUsername}
+            value={username}
+            placeholder="Nome de usuário"
+          />
+
+          <TextInput
+            style={styles.input}
+            onChangeText={setEmail}
+            value={email}
+            placeholder="Email"
+          />
+
           <Button
             onPress={startCall}
             title="Entrar na reunião do Jitsi"
             color="#841584"
             accessibilityLabel="Entrar na reunião do Jitsi"
+            disabled={!callUrl || !username || !email}
           />
         </>
       ) : (
@@ -63,4 +89,14 @@ function App() {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+});
+
 export default App;
